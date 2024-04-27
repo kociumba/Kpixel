@@ -18,13 +18,19 @@ func main() {
 		flag.Usage()
 	}
 
-	clog.Info("Pick the image you want to sort")
-	imgPath, err := zenity.SelectFile(
-		zenity.Filename(os.ExpandEnv("$HOME")),
-		zenity.FileFilters{{Name: "Images", Patterns: []string{"*.png", "*.jpg", "*.jpeg"}}},
-	)
-	if err != nil {
-		clog.Fatal(err)
+	var imgPath string
+	clog.Info(os.Args)
+	if os.Args[3] != "" {
+		imgPath = os.Args[3]
+	} else {
+		clog.Info("Pick the image you want to sort")
+		imgPath, _ = zenity.SelectFile(
+			zenity.Filename(os.ExpandEnv("$HOME")),
+			zenity.FileFilters{{Name: "Images", Patterns: []string{"*.png", "*.jpg", "*.jpeg"}}},
+		)
+		// if err != nil {
+		// 	clog.Fatal(err)
+		// }
 	}
 
 	img, format, err := openAndDecodeImage(imgPath)
