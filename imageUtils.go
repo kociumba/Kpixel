@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"image"
 	"image/color"
 	"math"
+	"math/rand"
 	"sync"
-
-	clog "github.com/charmbracelet/log"
+	"time"
 )
 
 type Pixel struct {
@@ -15,46 +14,83 @@ type Pixel struct {
 	ColorValue color.RGBA
 }
 
-func sortPixels(img image.Image, sortByColumn bool) *image.RGBA {
+func sortPixels(img image.Image, sortingMethod SortingMethod) *image.RGBA {
 	bounds := img.Bounds()
 	newImg := image.NewRGBA(bounds)
 	var wg sync.WaitGroup
 
-	if sortByColumn {
+	rand.New(rand.NewSource(time.Now().UnixNano())) // Seed random number generator
+
+	switch sortingMethod {
+	case ColumnSorting:
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			wg.Add(1)
-			clog.Info(fmt.Sprintf("%d of %d sorted", x, bounds.Max.X))
-
 			go func(x int) {
 				defer wg.Done()
 				column := extractPixels(img, x, bounds.Min.Y, x+1, bounds.Max.Y)
-
 				quickSort(column, 0, len(column)-1)
-
 				for y, pixel := range column {
 					newImg.Set(x, bounds.Min.Y+y, pixel.ColorValue)
 				}
 			}(x)
 		}
-	} else {
+	case RowSorting:
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 			wg.Add(1)
-			clog.Info(fmt.Sprintf("%d of %d sorted", y, bounds.Max.Y))
-
 			go func(y int) {
 				defer wg.Done()
 				row := extractPixels(img, bounds.Min.X, y, bounds.Max.X, y+1)
-
 				quickSort(row, 0, len(row)-1)
-
 				for x, pixel := range row {
 					newImg.Set(bounds.Min.X+x, y, pixel.ColorValue)
 				}
 			}(y)
 		}
+	case RandomSorting:
+		// chunkSize := int(math.Max(float64(bounds.Dx()/69), 10))
+		for x := bounds.Min.X; x < bounds.Max.X; x += *chunkSize {
+			for y := bounds.Min.Y; y < bounds.Max.Y; y += *chunkSize {
+				wg.Add(1)
+				go func(x, y int) {
+					defer wg.Done()
+					// Determine the boundaries of the chunk
+					endX := x + *chunkSize
+					if endX > bounds.Max.X {
+						endX = bounds.Max.X
+					}
+					endY := y + *chunkSize
+					if endY > bounds.Max.Y {
+						endY = bounds.Max.Y
+					}
+
+					// Extract all pixels in the current chunk
+					pixels := make([]color.Color, 0, (endX-x)*(endY-y))
+					for j := y; j < endY; j++ {
+						for i := x; i < endX; i++ {
+							pixels = append(pixels, img.At(i, j))
+						}
+					}
+
+					// Shuffle the pixels in the current chunk
+					rand.Shuffle(len(pixels), func(i, j int) {
+						pixels[i], pixels[j] = pixels[j], pixels[i]
+					})
+
+					// Place the shuffled pixels back into the new image
+					idx := 0
+					for j := y; j < endY; j++ {
+						for i := x; i < endX; i++ {
+							newImg.Set(i, j, pixels[idx])
+							idx++
+						}
+					}
+				}(x, y)
+			}
+		}
+
+		wg.Wait()
 	}
 
-	wg.Wait()
 	return newImg
 }
 
