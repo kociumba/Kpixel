@@ -7,7 +7,6 @@
 *.dll
 *.so
 *.dylib
-*.lnk
 
 # Test binary, built with `go test -c`
 *.test
@@ -20,3 +19,7 @@
 
 # Go workspace file
 go.work
+
+# Other miscelanious files
+*.lnk
+*.png

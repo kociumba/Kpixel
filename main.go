@@ -10,9 +10,12 @@ import (
 	"github.com/ncruces/zenity"
 )
 
+var chunkSize *int
+
 func main() {
 	sortMethod := flag.String("sort", "", "Sort method: 'column', 'row', 'random'")
 	chunkSize = flag.Int("chunk", 10, "chunks to devide the image in to when using random sort")
+	sortValue := flag.String("method", "hue", "Sort method: 'hue', 'red', 'green', 'blue'")
 	flag.Parse()
 	if !flag.Parsed() {
 		clog.Fatal("Please specify a sorting method")
@@ -43,7 +46,7 @@ func main() {
 		clog.Fatal(err)
 	}
 
-	strategy, err := parseSortingMethod(*sortMethod)
+	strategy, err := setupSorting(*sortMethod, *sortValue)
 	if err != nil {
 		fmt.Println(err)
 		flag.Usage()
