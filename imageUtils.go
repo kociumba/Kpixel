@@ -1,9 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"math"
+	"sync"
+
+	clog "github.com/charmbracelet/log"
 )
 
 type Pixel struct {
@@ -14,31 +18,43 @@ type Pixel struct {
 func sortPixels(img image.Image, sortByColumn bool) *image.RGBA {
 	bounds := img.Bounds()
 	newImg := image.NewRGBA(bounds)
+	var wg sync.WaitGroup
 
 	if sortByColumn {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			column := extractPixels(img, x, bounds.Min.Y, x+1, bounds.Max.Y)
+			wg.Add(1)
+			clog.Info(fmt.Sprintf("%d of %d sorted", x, bounds.Max.X))
 
-			quickSort(column, 0, len(column)-1)
+			go func(x int) {
+				defer wg.Done()
+				column := extractPixels(img, x, bounds.Min.Y, x+1, bounds.Max.Y)
 
-			for y, pixel := range column {
-				newImg.Set(x, bounds.Min.Y+y, pixel.ColorValue)
-			}
+				quickSort(column, 0, len(column)-1)
 
+				for y, pixel := range column {
+					newImg.Set(x, bounds.Min.Y+y, pixel.ColorValue)
+				}
+			}(x)
 		}
 	} else {
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-			row := extractPixels(img, bounds.Min.X, y, bounds.Max.X, y+1)
+			wg.Add(1)
+			clog.Info(fmt.Sprintf("%d of %d sorted", y, bounds.Max.Y))
 
-			quickSort(row, 0, len(row)-1)
+			go func(y int) {
+				defer wg.Done()
+				row := extractPixels(img, bounds.Min.X, y, bounds.Max.X, y+1)
 
-			for x, pixel := range row {
-				newImg.Set(bounds.Min.X+x, y, pixel.ColorValue)
-			}
+				quickSort(row, 0, len(row)-1)
 
+				for x, pixel := range row {
+					newImg.Set(bounds.Min.X+x, y, pixel.ColorValue)
+				}
+			}(y)
 		}
 	}
 
+	wg.Wait()
 	return newImg
 }
 
