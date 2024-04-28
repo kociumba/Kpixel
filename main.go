@@ -20,8 +20,8 @@ func main() {
 
 	var imgPath string
 	clog.Info(os.Args)
-	if os.Args[3] != "" {
-		imgPath = os.Args[3]
+	if os.Args[len(os.Args)-1] != "" {
+		imgPath = os.Args[len(os.Args)-1]
 	} else {
 		clog.Info("Pick the image you want to sort")
 		imgPath, _ = zenity.SelectFile(
