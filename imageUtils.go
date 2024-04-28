@@ -83,6 +83,8 @@ func calculateHue(c color.RGBA) float64 {
 	r := float64(c.R) / 255.0
 	g := float64(c.G) / 255.0
 	b := float64(c.B) / 255.0
+	// pixelColor := gocolor.Color{R: float64(c.R), G: float64(c.G), B: float64(c.B)} // simpler way but with a dependency produces the same result
+	// hue, _, _ := pixelColor.Hsl()
 	max := math.Max(r, math.Max(g, b))
 	min := math.Min(r, math.Min(g, b))
 	var hue float64

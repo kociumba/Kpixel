@@ -33,7 +33,7 @@ func main() {
 		// }
 	}
 
-	img, format, err := openAndDecodeImage(imgPath)
+	img, format, err := openAndDecodeImage(filepath.Clean(imgPath))
 	if err != nil {
 		clog.Fatal(err)
 	}
