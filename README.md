@@ -27,6 +27,6 @@ So i made my own implementation in go, this is by no means feature complete.
 > [!IMPORTANT]
 > always pass the path to the image you want to sort as the last argument
 >
-> if you don't pass the image path a file picker will open prompting you to pick an image 
+> if you don't pass the image path, a file picker will open prompting you to pick an image 
 
 Output always goes into the folder of the original image with a .sorted extension to indicate that it has been sorted.
