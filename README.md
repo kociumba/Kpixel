@@ -1,4 +1,4 @@
-# Pixel sorting algorith in go
+# Pixel sorting algorithm in go
 
 I got inspired by the youtube video by Acerola on pixel sorting.
 
