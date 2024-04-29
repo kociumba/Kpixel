@@ -19,10 +19,12 @@ So i made my own implementation in go, this is by no means feature complete.
 
 `-method` defines the value that is used to sort the pixels, options are:
 
-> - `hue` (sorts pixels by their hue value)
-> - `red` (sorts pixels by their red value)
-> - `green` (sorts pixels by their green value)
-> - `blue` (sorts pixels by their blue value)
+> - `hue` (very noisy)
+> - `luminosity` (smooth and looks good)
+> - `saturation` (kinda buggy, needs more testing)
+> - `red` (looks good depending on the image)
+> - `green` (looks good depending on the image)
+> - `blue` (looks good depending on the image)
 
 > [!IMPORTANT]
 > always pass the path to the image you want to sort as the last argument
