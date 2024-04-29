@@ -22,6 +22,8 @@ func main() {
 		flag.Usage()
 	}
 
+	clog.Info(*chunkSize)
+
 	var imgPath string
 	clog.Info(os.Args)
 	imgPath = os.Args[len(os.Args)-1]
