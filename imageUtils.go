@@ -32,7 +32,7 @@ func sortPixels(img image.Image, sortingMethod SortingMethod, colorSortType Colo
 			go func(x int) {
 				defer wg.Done()
 				column := extractPixels(img, x, bounds.Min.Y, x+1, bounds.Max.Y, colorSortType)
-				sort.Slice(column, func(i, j int) bool {
+				sort.SliceStable(column, func(i, j int) bool {
 					return column[i].SortValue < column[j].SortValue
 				})
 				for y, pixel := range column {
@@ -46,7 +46,7 @@ func sortPixels(img image.Image, sortingMethod SortingMethod, colorSortType Colo
 			go func(y int) {
 				defer wg.Done()
 				row := extractPixels(img, bounds.Min.X, y, bounds.Max.X, y+1, colorSortType)
-				sort.Slice(row, func(i, j int) bool {
+				sort.SliceStable(row, func(i, j int) bool {
 					return row[i].SortValue < row[j].SortValue
 				})
 				for x, pixel := range row {
@@ -121,6 +121,8 @@ func extractPixels(img image.Image, minX, minY, maxX, maxY int, colorSortType Co
 				method = getBlue(rgba)
 			case Luminosity:
 				method = calculateLuminosity(rgba)
+			case Saturation:
+				method = calculateSaturation(rgba)
 			}
 
 			pixels = append(pixels, Pixel{SortValue: method, ColorValue: rgba})

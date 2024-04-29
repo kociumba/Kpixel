@@ -53,6 +53,24 @@ func calculateLuminosity(c color.RGBA) float64 {
 	return L
 }
 
+func calculateSaturation(c color.RGBA) float64 {
+	max, min := getMaxMin(c)
+	L := calculateLuminosity(c)
+	var S float64
+
+	if L < 1.0 {
+		if (1.0 - math.Abs(2.0*L-1.0)) == 0.0 {
+			S = 0.0
+		} else {
+			S = (max - min) / (1.0 - math.Abs(2.0*L-1.0))
+		}
+	} else {
+		S = 0.0
+	}
+
+	return S
+}
+
 func getRed(c color.RGBA) float64 {
 	return float64(c.R)
 }
