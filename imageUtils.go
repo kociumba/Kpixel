@@ -119,6 +119,8 @@ func extractPixels(img image.Image, minX, minY, maxX, maxY int, colorSortType Co
 				method = getGreen(rgba)
 			case Blue:
 				method = getBlue(rgba)
+			case Luminosity:
+				method = calculateLuminosity(rgba)
 			}
 
 			pixels = append(pixels, Pixel{SortValue: method, ColorValue: rgba})

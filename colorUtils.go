@@ -5,14 +5,26 @@ import (
 	"math"
 )
 
+func getMaxMin(c color.RGBA) (float64, float64) {
+	r := float64(c.R) / 255.0
+	g := float64(c.G) / 255.0
+	b := float64(c.B) / 255.0
+
+	max := math.Max(r, math.Max(g, b))
+	min := math.Min(r, math.Min(g, b))
+
+	return max, min
+}
+
 func calculateHue(c color.RGBA) float64 {
 	r := float64(c.R) / 255.0
 	g := float64(c.G) / 255.0
 	b := float64(c.B) / 255.0
 	// pixelColor := gocolor.Color{R: float64(c.R), G: float64(c.G), B: float64(c.B)} // simpler way but with a dependency produces the same result
 	// hue, _, _ := pixelColor.Hsl()
-	max := math.Max(r, math.Max(g, b))
-	min := math.Min(r, math.Min(g, b))
+
+	max, min := getMaxMin(c)
+
 	var hue float64
 	if max == min {
 		hue = 0 // achromatic
@@ -31,6 +43,14 @@ func calculateHue(c color.RGBA) float64 {
 		}
 	}
 	return hue
+}
+
+func calculateLuminosity(c color.RGBA) float64 {
+	max, min := getMaxMin(c)
+
+	L := (1.0 / 2.0) * (max + min)
+
+	return L
 }
 
 func getRed(c color.RGBA) float64 {

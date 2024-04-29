@@ -18,10 +18,11 @@ const (
 type ColorSortType int
 
 const (
-	Hue   ColorSortType = iota
-	Red   ColorSortType = iota
-	Green ColorSortType = iota
-	Blue  ColorSortType = iota
+	Hue        ColorSortType = iota
+	Red        ColorSortType = iota
+	Green      ColorSortType = iota
+	Blue       ColorSortType = iota
+	Luminosity ColorSortType = iota
 )
 
 // SortingStrategy defines the behavior for sorting methods
@@ -100,6 +101,8 @@ func parseSortByValue(input string) (ColorSortType, error) {
 		return Green, nil
 	case "blue":
 		return Blue, nil
+	case "luminosity":
+		return Luminosity, nil
 	default:
 		return 0, fmt.Errorf("invalid sort value: %s", input)
 	}
