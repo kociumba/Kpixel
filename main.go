@@ -13,6 +13,15 @@ import (
 var chunkSize *int
 
 func main() {
+
+	// profiling for debug
+	// mux := http.NewServeMux()
+	// statsviz.Register(mux)
+
+	// go func() {
+	// 	clog.Info(http.ListenAndServe("localhost:8080", mux))
+	// }()
+
 	sortMethod := flag.String("sort", "", "Sort method: 'column', 'row', 'random'")
 	chunkSize = flag.Int("chunk", 10, "chunks to devide the image in to when using random sort")
 	sortValue := flag.String("method", "hue", "Sort method: 'hue', 'luminosity', 'saturation', 'red', 'green', 'blue'")
