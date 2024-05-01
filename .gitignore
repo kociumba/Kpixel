@@ -24,3 +24,4 @@ go.work
 *.lnk
 *.png
 /Taskfile.yaml
+/registry contex menus

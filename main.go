@@ -22,6 +22,10 @@ func main() {
 	// 	clog.Info(http.ListenAndServe("localhost:8080", mux))
 	// }()
 
+	// if runtime.GOOS == "windows" {
+	// 	checkRegistry() // checks for the registry keys on windows to add a contex menu item to images
+	// }
+
 	sortMethod := flag.String("sort", "", "Sort method: 'column', 'row', 'random'")
 	chunkSize = flag.Int("chunk", 10, "chunks to devide the image in to when using random sort")
 	sortValue := flag.String("method", "hue", "Sort method: 'hue', 'luminosity', 'saturation', 'red', 'green', 'blue'")
