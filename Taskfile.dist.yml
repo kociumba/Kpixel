@@ -6,6 +6,7 @@ vars:
   GREETING: Hello, World!
 
 tasks:
-  default:
+  dist_build:
     cmds:
+    - go get -C . -d ./...
     - go build
