@@ -37,8 +37,7 @@ func calculateHue(c color.RGBA) float64 {
 	// hue, _, _ := pixelColor.Hsl()
 
 	if c.R == c.B && c.G == c.B && c.R == c.G { // has to be here for some reson
-		// clog.Info("equal") 					// if this is not here the function doesn't detect equals 💀
-		return 0.0
+		return 0.0 // if this is not here the function doesn't detect equals 💀
 	}
 
 	// max, min := getMaxMin(c)

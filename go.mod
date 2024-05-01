@@ -1,4 +1,4 @@
-module pixelSorter
+module Kpixel
 
 go 1.22.1
 
