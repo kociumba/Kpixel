@@ -24,7 +24,8 @@ I will create a scoop manifest for it in the future.
 
 ## Usage
 
-Kpixel is a CLI tool for `-sort column` and `-sort row` the `-method` matters, for `-sort random` you can define the `-chunk` in pixels e.g. `-sort random -chunk 100`.
+> [!IMPORTANT]
+> for `-sort column` and `-sort row` the `-method` flag is requred, for `-sort random` the `-chunk` flag defines the size of the chunks in pixels e.g. `-sort random -chunk 100` will divide the image in to 100x100 chunks.
 
 `-sort` defines the way we sort pixels, options are:
 
