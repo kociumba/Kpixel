@@ -1,10 +1,30 @@
-# Pixel sorting algorithm in go
+# <p align="center">Welcome to</p>
 
-I got inspired by the youtube video by Acerola on pixel sorting.
+<p align="center">
+    <img src="Kpixel.svg" alt="Kpixel" title="Kpixel logo">
+</p>
 
-So i made my own implementation in go, this is by no means feature complete.
+## Overview
+
+I got inspired by the YouTube video by Acerola on pixel sorting.
+
+So I made my own implementation in go, this is by no means feature complete.
+
+Kpixel is a part of my K suite of tools that so far includes:
+- [Ktool](https://github.com/kociumba/ktool)
+- [Ksorter](https://github.com/kociumba/ksorter)
+- [Kinjector](https://github.com/kociumba/Kinjector)
+- [Kpixel](https://github.com/kociumba/kpixel) - this repo
+
+## Installation
+
+Right now the only way to install is to compile it yourself which only requires [go](https://go.dev/dl/).
+
+I will create a scoop manifest for it in the future.
 
 ## Usage
+
+Kpixel is a CLI tool for `-sort column` and `-sort row` the `-method` matters, for `-sort random` you can define the `-chunk` in pixels e.g. `-sort random -chunk 100`.
 
 `-sort` defines the way we sort pixels, options are:
 
@@ -12,7 +32,7 @@ So i made my own implementation in go, this is by no means feature complete.
 > - `row` (sorts pixels in respective rows, preserves horizontal elements)
 > - `random` (randomly sorts pixels in chunks)
 
-`-chunk` number of chunks to devide the image in to when using random sort defaults to 10 (only relevant if using random sort)
+`-chunk` number of chunks to divide the image in to when using random sort defaults to 10 (only relevant if using random sort)
 
 > [!NOTE]
 > if the chunk size is bigger than the width of the image in pixels the whole image gets randomised and essentially becomes noise
