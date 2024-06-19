@@ -24,5 +24,5 @@ require (
 	github.com/josephspurrier/goversioninfo v1.4.0 // indirect
 	github.com/randall77/makefat v0.0.0-20210315173500-7ddd0e42c844 // indirect
 	golang.org/x/image v0.15.0 // indirect
-	golang.org/x/sys v0.17.0
+	golang.org/x/sys v0.17.0 // indirect
 )
